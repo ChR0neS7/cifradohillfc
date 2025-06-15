@@ -3,10 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <title>Cifrado de Hill</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.8.0/math.min.js"></script>
 </head>
 <body>
   <h1>Cifrado de Hill</h1>
+
   <form id="hillForm">
     <label>Texto plano:
       <input type="text" id="textoPlano" required>
@@ -20,10 +22,11 @@
       <textarea id="matrizClave" rows="3" placeholder="Ej: 3,3\n2,5" required></textarea>
     </label><br><br>
 
-    <button type="submit">Cifrar</button>
+    <button type="button" onclick="cifrarHill()">Cifrar</button><br><br>
+    <button type="button" onclick="desencriptarHill()">Descifrar</button>
   </form>
 
-  <h2>Texto cifrado:</h2>
+  <h2>Resultado:</h2>
   <p id="resultado"></p>
 
   <footer>
@@ -33,4 +36,5 @@
   <script src="script.js"></script>
 </body>
 </html>
+
 

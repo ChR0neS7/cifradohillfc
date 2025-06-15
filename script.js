@@ -78,3 +78,76 @@ document.getElementById("hillForm").addEventListener("submit", function(e) {
   const resultado = encriptarHill(texto, filas, n);
   document.getElementById("resultado").textContent = resultado;
 });
+
+
+
+function mod(n, m) {
+  return ((n % m) + m) % m;
+}
+
+function textToVector(text, bloque) {
+  const nums = text.toUpperCase().replace(/[^A-Z]/g, '').split('').map(c => c.charCodeAt(0) - 65);
+  while (nums.length % bloque !== 0) nums.push(0); // Padding con 'A'
+  return nums;
+}
+
+function parseMatrix(input, bloque) {
+  const filas = input.trim().split("\n");
+  return filas.map(fila => fila.split(",").map(n => mod(parseInt(n), 26)));
+}
+
+function matrixInverseMod(matrix, modulo) {
+  const math = window.math;
+  const det = math.det(matrix);
+  const detInv = modInverse(Math.round(det), modulo);
+  if (detInv === null) {
+    alert("La matriz clave no es invertible en módulo 26.");
+    return null;
+  }
+
+  const adj = math.transpose(math.matrix(math.map(math.cofactor(matrix), x => Math.round(x))));
+  return math.mod(math.multiply(detInv, adj), modulo)._data;
+}
+
+function modInverse(a, m) {
+  a = mod(a, m);
+  for (let x = 1; x < m; x++) {
+    if ((a * x) % m === 1) return x;
+  }
+  return null;
+}
+
+function desencriptarHill() {
+  const texto = document.getElementById("textoPlano").value;
+  const bloque = parseInt(document.getElementById("tamBloque").value);
+  const matrizStr = document.getElementById("matrizClave").value;
+
+  const matriz = parseMatrix(matrizStr, bloque);
+  const matrizInv = matrixInverseMod(matriz, 26);
+  if (!matrizInv) return;
+
+  const vector = textToVector(texto, bloque);
+  const resultado = [];
+
+  for (let i = 0; i < vector.length; i += bloque) {
+    const bloqueVec = vector.slice(i, i + bloque);
+    const resultadoBloque = math.multiply(matrizInv, bloqueVec);
+    resultado.push(...resultadoBloque.map(x => String.fromCharCode(mod(Math.round(x), 26) + 65)));
+  }
+
+  document.getElementById("resultado").textContent = resultado.join('');
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
