@@ -6,20 +6,19 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-
   <h1>Cifrado de Hill</h1>
-  
   <form id="hillForm">
-    <label for="textoPlano">Texto plano:</label>
-    <input type="text" id="textoPlano" required>
-    </h2>
+    <label>Texto plano:
+      <input type="text" id="textoPlano" required>
+    </label><br><br>
 
-    <label for="tamBloque">Tamaño del bloque (2 o 3):</label>
-    <input type="number" id="tamBloque" min="2" max="3" required>
-    </h2>
+    <label>Tamaño del bloque (2 o 3):
+      <input type="number" id="tamBloque" min="2" max="3" required>
+    </label><br><br>
 
-    <label for="matrizClave">Matriz clave (escribe fila por fila, separada por comas):</label>
-    <textarea id="matrizClave" rows="3" placeholder="Ej: 3,3\n2,5" required></textarea>
+    <label>Matriz clave (escribe fila por fila, separada por comas):
+      <textarea id="matrizClave" rows="3" placeholder="Ej: 3,3\n2,5" required></textarea>
+    </label><br><br>
 
     <button type="submit">Cifrar</button>
   </form>
