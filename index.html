@@ -1,27 +1,42 @@
-<form id="hillForm">
-  <label>Texto plano:
-    <input type="text" id="textoPlano" required>
-  </label><br><br>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Cifrado de Hill</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.8.0/math.min.js"></script>
+</head>
+<body>
+  <h1>Cifrado de Hill</h1>
 
-  <label>Tamaño del bloque (2 o 3):
-    <input type="number" id="tamBloque" min="2" max="3" required>
-  </label><br><br>
+  <!-- Formulario separado sin comportamiento de submit -->
+  <div class="formulario">
+    <label>Texto plano:
+      <input type="text" id="textoPlano" required>
+    </label><br><br>
 
-  <label>Matriz clave (escribe fila por fila, separada por comas):
-    <textarea id="matrizClave" rows="3" placeholder="Ej: 3,3\n2,5" required></textarea>
-  </label><br><br>
+    <label>Tamaño del bloque (2 o 3):
+      <input type="number" id="tamBloque" min="2" max="3" required>
+    </label><br><br>
 
-  <button type="button" onclick="cifrarHill()">Cifrar</button>
-  <button type="button" onclick="desencriptarHill()">Descifrar</button>
-</form>
+    <label>Matriz clave (escribe fila por fila, separada por comas):
+      <textarea id="matrizClave" rows="3" placeholder="Ej: 3,3\n2,5" required></textarea>
+    </label><br><br>
 
-<!-- Caja separada para el resultado -->
-<section id="seccionResultado">
-  <h2>Resultado:</h2>
-  <p id="resultado"></p>
-</section>
+    <button onclick="cifrarHill()">Cifrar</button><br><br>
+    <button onclick="desencriptarHill()">Descifrar</button>
+  </div>
 
-<footer>
-  <img src="logo.png" alt="Logo de la Universidad">
-</footer>
+  <!-- Resultado separado del formulario para evitar problemas de renderizado -->
+  <div id="seccionResultado">
+    <h2>Resultado:</h2>
+    <p id="resultado">El texto cifrado o descifrado aparecerá aquí.</p>
+  </div>
 
+  <footer>
+    <img src="logo.png" alt="Logo de la Universidad">
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
