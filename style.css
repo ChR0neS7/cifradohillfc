@@ -2,46 +2,54 @@ body {
   margin: 0;
   min-height: 100vh;
   font-family: 'Segoe UI', sans-serif;
-  background-color: #8B0000; /* rojo oscuro agradable */
+  background-color: #8B0000; /* rojo oscuro */
   color: #ffffff;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
-  padding: 2em;
+  padding: 1em;
 }
 
 h1 {
+  margin-top: 1em;
   margin-bottom: 1em;
+  font-size: 1.6em;
+  text-align: center;
 }
 
 form {
-  background-color: rgba(255, 255, 255, 0.1);
-  padding: 2em;
+  background-color: rgba(255, 255, 255, 0.08);
+  padding: 1.5em;
   border-radius: 12px;
-  max-width: 500px;
+  max-width: 400px;
   width: 100%;
   margin-bottom: 2em;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
 }
 
 label {
   display: block;
-  margin: 1em 0 0.5em;
+  margin-bottom: 0.5em;
   font-weight: bold;
   color: #ffe6e6;
+  text-align: left;
 }
 
 input, textarea {
   width: 100%;
   padding: 0.5em;
+  margin-bottom: 1.5em;
   border-radius: 8px;
   border: none;
   font-size: 1em;
 }
 
+textarea {
+  resize: vertical;
+}
+
 button {
-  margin-top: 1em;
-  padding: 0.75em 2em;
+  padding: 0.7em 1.5em;
   background-color: #ffffff;
   color: #8B0000;
   font-weight: bold;
@@ -49,6 +57,7 @@ button {
   border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.3s;
+  width: 100%;
 }
 
 button:hover {
@@ -56,17 +65,20 @@ button:hover {
 }
 
 #resultado {
-  margin-top: 2em;
-  font-size: 1.2em;
+  margin-top: 1.5em;
+  font-size: 1.1em;
   color: #ffffcc;
-  max-width: 500px;
+  max-width: 400px;
+  text-align: center;
 }
 
 footer {
-  margin-top: 3em;
+  margin-top: 2em;
+  margin-bottom: 1em;
+  text-align: center;
 }
 
 footer img {
-  max-width: 120px;
+  max-width: 80px;
   opacity: 0.85;
 }
