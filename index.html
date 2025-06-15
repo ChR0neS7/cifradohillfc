@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Cifrado de Hill</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <h1>Cifrado de Hill</h1>
+  <form id="hillForm">
+    <label>Texto plano:
+      <input type="text" id="textoPlano" required>
+    </label><br><br>
+
+    <label>Tamaño del bloque (2 o 3):
+      <input type="number" id="tamBloque" min="2" max="3" required>
+    </label><br><br>
+
+    <label>Matriz clave (escribe fila por fila, separada por comas):
+      <textarea id="matrizClave" rows="3" placeholder="Ej: 3,3\n2,5" required></textarea>
+    </label><br><br>
+
+    <button type="submit">Cifrar</button>
+  </form>
+
+  <h2>Texto cifrado:</h2>
+  <p id="resultado"></p>
+
+  <script src="script.js"></script>
+</body>
+</html>
