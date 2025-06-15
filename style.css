@@ -79,6 +79,8 @@ footer {
 }
 
 footer img {
-  max-width: 3px;
-  opacity: 0.85;
+  max-height: 24px;     /* altura como el logo de YouTube */
+  opacity: 0.9;         /* ligera transparencia */
+  margin-top: 0.5em;
+  filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.5)); /* sombra sutil */
 }
