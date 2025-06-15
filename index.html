@@ -2,15 +2,16 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Cifrado de Hill</title>
+  <title>Cifrado y Descifrado de Hill</title>
   <link rel="stylesheet" href="style.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.8.0/math.min.js"></script>
 </head>
 <body>
-  <h1>Cifrado de Hill</h1>
+  <h1>Cifrado y Descifrado de Hill</h1>
 
-  <!-- Formulario separado sin comportamiento de submit -->
+  <!-- Formulario de Cifrado -->
   <div class="formulario">
+    <h2>Cifrado</h2>
     <label>Texto plano:
       <input type="text" id="textoPlano" required>
     </label><br><br>
@@ -19,18 +20,41 @@
       <input type="number" id="tamBloque" min="2" max="3" required>
     </label><br><br>
 
-    <label>Matriz clave (escribe fila por fila, separada por comas):
+    <label>Matriz clave:
       <textarea id="matrizClave" rows="3" placeholder="Ej: 3,3\n2,5" required></textarea>
     </label><br><br>
 
-    <button onclick="cifrarHill()">Cifrar</button><br><br>
-    <button onclick="desencriptarHill()">Descifrar</button>
+    <button onclick="cifrarHill()">Cifrar</button>
   </div>
 
-  <!-- Resultado separado del formulario para evitar problemas de renderizado -->
+  <!-- Resultado de cifrado -->
   <div id="seccionResultado">
-    <h2>Resultado:</h2>
-    <p id="resultado">El texto cifrado o descifrado aparecerá aquí.</p>
+    <h3>Texto cifrado:</h3>
+    <p id="resultadoCifrado">---</p>
+  </div>
+
+  <!-- Formulario de Descifrado -->
+  <div class="formulario">
+    <h2>Descifrado</h2>
+    <label>Texto cifrado:
+      <input type="text" id="textoCifrado" required>
+    </label><br><br>
+
+    <label>Tamaño del bloque (2 o 3):
+      <input type="number" id="tamBloqueDesc" min="2" max="3" required>
+    </label><br><br>
+
+    <label>Matriz clave:
+      <textarea id="matrizClaveDesc" rows="3" placeholder="Ej: 3,3\n2,5" required></textarea>
+    </label><br><br>
+
+    <button onclick="desencriptarHill()">Desencriptar</button>
+  </div>
+
+  <!-- Resultado de descifrado -->
+  <div id="seccionResultadoDesc">
+    <h3>Texto descifrado:</h3>
+    <p id="resultadoDescifrado">---</p>
   </div>
 
   <footer>
