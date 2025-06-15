@@ -1,87 +1,102 @@
+/* Estilo general */
 body {
   margin: 0;
   min-height: 100vh;
   font-family: 'Segoe UI', sans-serif;
-  background-color: #8B0000; /* rojo oscuro */
+  background-color: #8B0000; /* Rojo oscuro */
   color: #ffffff;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 1em;
+  padding: 2em 1em;
 }
 
+/* Título principal */
 h1 {
-  margin-top: 1em;
+  margin-top: 0.5em;
   margin-bottom: 1em;
-  font-size: 1.6em;
+  font-size: 2em;
   text-align: center;
 }
 
-form {
+/* Secciones de formularios */
+.formulario {
   background-color: rgba(255, 255, 255, 0.08);
   padding: 1.5em;
   border-radius: 12px;
-  max-width: 400px;
+  max-width: 420px;
   width: 100%;
   margin-bottom: 2em;
-  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
 }
 
+/* Etiquetas de campos */
 label {
   display: block;
-  margin-bottom: 0.5em;
+  margin-bottom: 0.6em;
   font-weight: bold;
   color: #ffe6e6;
-  text-align: left;
 }
 
+/* Entradas de texto */
 input, textarea {
   width: 100%;
-  padding: 0.5em;
+  padding: 0.6em;
   margin-bottom: 1.5em;
   border-radius: 8px;
   border: none;
   font-size: 1em;
+  background-color: #fff;
+  color: #000;
 }
 
 textarea {
   resize: vertical;
 }
 
+/* Botones */
 button {
-  padding: 0.7em 1.5em;
+  padding: 0.8em 1.5em;
   background-color: #ffffff;
   color: #8B0000;
   font-weight: bold;
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: all 0.3s;
   width: 100%;
 }
 
 button:hover {
   background-color: #ffcccc;
+  transform: scale(1.02);
 }
 
-#resultado {
-  margin-top: 1.5em;
-  font-size: 1.1em;
-  color: #ffffcc;
-  max-width: 400px;
+/* Resultado */
+#seccionResultado, #seccionResultadoDesc {
+  max-width: 420px;
   text-align: center;
+  margin-bottom: 2em;
 }
 
+#resultadoCifrado, #resultadoDescifrado {
+  margin-top: 1em;
+  font-size: 1.2em;
+  color: #ffffcc;
+  word-wrap: break-word;
+}
+
+/* Pie de página */
 footer {
-  margin-top: 2em;
+  margin-top: auto;
   margin-bottom: 1em;
   text-align: center;
 }
 
 footer img {
-  height: 40px;
+  height: 28px;
   width: auto;
-  opacity: 0.9;
-  margin-top: 0.5em;
-  filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.5));
+  opacity: 0.95;
+  margin-top: 1em;
+  filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.5));
 }
