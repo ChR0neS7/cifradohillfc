@@ -1,22 +1,63 @@
 body {
-  font-family: sans-serif;
-  padding: 20px;
-  max-width: 600px;
-  margin: auto;
-  background: #f7f7f7;
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #b30000; /* rojo oscuro elegante */
+  color: #ffffff; /* letras blancas para buen contraste */
+  text-align: center;
+  padding: 2em;
 }
+
+img.logo {
+  max-width: 150px;
+  margin-bottom: 1em;
+}
+
 h1 {
-  color: #333;
+  margin-bottom: 0.5em;
 }
+
+form {
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 2em;
+  border-radius: 12px;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
 label {
   display: block;
-  margin-bottom: 10px;
+  margin: 1em 0 0.5em;
+  font-weight: bold;
+  color: #ffe6e6; /* contraste suave con fondo rojo */
 }
+
 input, textarea {
   width: 100%;
-  padding: 5px;
+  padding: 0.5em;
+  border-radius: 8px;
+  border: none;
+  font-size: 1em;
 }
+
 button {
-  padding: 10px 15px;
+  margin-top: 1em;
+  padding: 0.75em 2em;
+  background-color: #ffffff;
+  color: #b30000;
   font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
 }
+
+button:hover {
+  background-color: #ffd6d6;
+}
+
+#resultado {
+  margin-top: 2em;
+  font-size: 1.2em;
+  color: #ffffcc;
+}
+

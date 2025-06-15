@@ -6,19 +6,21 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  <img src="logo.png" alt="Logo de la Universidad" class="logo">
   <h1>Cifrado de Hill</h1>
+  
   <form id="hillForm">
     <label>Texto plano:
       <input type="text" id="textoPlano" required>
-    </label><br><br>
+    </label>
 
     <label>Tamaño del bloque (2 o 3):
       <input type="number" id="tamBloque" min="2" max="3" required>
-    </label><br><br>
+    </label>
 
     <label>Matriz clave (escribe fila por fila, separada por comas):
       <textarea id="matrizClave" rows="3" placeholder="Ej: 3,3\n2,5" required></textarea>
-    </label><br><br>
+    </label>
 
     <button type="submit">Cifrar</button>
   </form>
