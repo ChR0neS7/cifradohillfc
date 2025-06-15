@@ -1,143 +1,99 @@
-function letraANum(c) {
-  return c.charCodeAt(0) - 'A'.charCodeAt(0);
+// Convertir letras a números (A = 0, ..., Z = 25)
+function textoANumeros(texto) {
+  return texto.toUpperCase().replace(/[^A-Z]/g, '').split('').map(c => c.charCodeAt(0) - 65);
 }
 
-function numALetra(n) {
-  return String.fromCharCode((n % 26) + 'A'.charCodeAt(0));
+// Convertir números a texto (0 = A, ..., 25 = Z)
+function numerosATexto(numeros) {
+  return numeros.map(n => String.fromCharCode((n % 26 + 26) % 26 + 65)).join('');
 }
 
-function esInvertibleMod26(matrix) {
-  const n = matrix.length;
-  let det;
-  if (n === 2) {
-    det = matrix[0][0]*matrix[1][1] - matrix[0][1]*matrix[1][0];
-  } else if (n === 3) {
-    det = (
-      matrix[0][0]*(matrix[1][1]*matrix[2][2] - matrix[1][2]*matrix[2][1]) -
-      matrix[0][1]*(matrix[1][0]*matrix[2][2] - matrix[1][2]*matrix[2][0]) +
-      matrix[0][2]*(matrix[1][0]*matrix[2][1] - matrix[1][1]*matrix[2][0])
-    );
+// Parsear la matriz clave desde el textarea
+function parsearMatriz(texto, tamaño) {
+  const filas = texto.trim().split('\n').map(f => f.split(',').map(Number));
+  if (filas.length !== tamaño || filas.some(f => f.length !== tamaño)) {
+    throw new Error("La matriz no tiene el tamaño correcto");
   }
-  det = ((det % 26) + 26) % 26;
-  return gcd(det, 26) === 1;
+  return math.matrix(filas);
 }
 
-function gcd(a, b) {
-  return b === 0 ? a : gcd(b, a % b);
-}
+// Cifrado de Hill
+function cifrarHill() {
+  try {
+    const texto = document.getElementById("textoPlano").value;
+    const tamaño = parseInt(document.getElementById("tamBloque").value);
+    const matrizTexto = document.getElementById("matrizClave").value;
 
-function preprocesarTexto(texto, n) {
-  texto = texto.toUpperCase().replace(/[^A-Z]/g, '');
-  while (texto.length % n !== 0) {
-    texto += 'X';
-  }
-  return texto;
-}
+    const matriz = parsearMatriz(matrizTexto, tamaño);
+    const numeros = textoANumeros(texto);
 
-function multiplicarMatriz(matriz, vector) {
-  const resultado = [];
-  for (let i = 0; i < matriz.length; i++) {
-    let suma = 0;
-    for (let j = 0; j < vector.length; j++) {
-      suma += matriz[i][j] * vector[j];
+    while (numeros.length % tamaño !== 0) {
+      numeros.push(88); // Rellenar con 'X'
     }
-    resultado.push(suma % 26);
+
+    const resultado = [];
+    for (let i = 0; i < numeros.length; i += tamaño) {
+      const bloque = math.matrix(numeros.slice(i, i + tamaño));
+      const producto = math.multiply(matriz, bloque);
+      const mod = producto.toArray().map(n => ((n % 26) + 26) % 26);
+      resultado.push(...mod);
+    }
+
+    document.getElementById("resultadoCifrado").textContent = numerosATexto(resultado);
+  } catch (error) {
+    alert("Error al cifrar: " + error.message);
   }
-  return resultado;
 }
 
-function encriptarHill(texto, matriz, n) {
-  texto = preprocesarTexto(texto, n);
-  let cifrado = '';
-  for (let i = 0; i < texto.length; i += n) {
-    const bloque = texto.slice(i, i + n).split('').map(letraANum);
-    const cifradoBloque = multiplicarMatriz(matriz, bloque).map(numALetra).join('');
-    cifrado += cifradoBloque;
-  }
-  return cifrado;
-}
+// Cálculo del inverso módulo 26 de una matriz
+function matrizInversaMod26(matriz) {
+  const det = Math.round(math.det(matriz));
+  const detMod = ((det % 26) + 26) % 26;
 
-document.getElementById("hillForm").addEventListener("submit", function(e) {
-  e.preventDefault();
-
-  const texto = document.getElementById("textoPlano").value;
-  const n = parseInt(document.getElementById("tamBloque").value);
-  const matrizTexto = document.getElementById("matrizClave").value.trim();
-
-  const filas = matrizTexto.split('\n').map(f => f.split(',').map(x => parseInt(x.trim())));
-  if (filas.length !== n || filas.some(fila => fila.length !== n)) {
-    alert("La matriz debe ser de tamaño " + n + "x" + n);
-    return;
-  }
-
-  if (!esInvertibleMod26(filas)) {
-    alert("La matriz no es invertible módulo 26");
-    return;
+  let invDet = null;
+  for (let i = 1; i < 26; i++) {
+    if ((detMod * i) % 26 === 1) {
+      invDet = i;
+      break;
+    }
   }
 
-  const resultado = encriptarHill(texto, filas, n);
-  document.getElementById("resultado").textContent = resultado;
-});
+  if (invDet === null) throw new Error("La matriz no tiene inversa módulo 26");
 
+  const adj = math.round(math.multiply(math.inv(matriz), det));
+  const inv = math.multiply(invDet, adj);
 
-
-function mod(n, m) {
-  return ((n % m) + m) % m;
+  return math.mod(inv, 26);
 }
 
-function textToVector(text, bloque) {
-  const nums = text.toUpperCase().replace(/[^A-Z]/g, '').split('').map(c => c.charCodeAt(0) - 65);
-  while (nums.length % bloque !== 0) nums.push(0); // Padding con 'A'
-  return nums;
-}
-
-function parseMatrix(input, bloque) {
-  const filas = input.trim().split("\n");
-  return filas.map(fila => fila.split(",").map(n => mod(parseInt(n), 26)));
-}
-
-function matrixInverseMod(matrix, modulo) {
-  const math = window.math;
-  const det = math.det(matrix);
-  const detInv = modInverse(Math.round(det), modulo);
-  if (detInv === null) {
-    alert("La matriz clave no es invertible en módulo 26.");
-    return null;
-  }
-
-  const adj = math.transpose(math.matrix(math.map(math.cofactor(matrix), x => Math.round(x))));
-  return math.mod(math.multiply(detInv, adj), modulo)._data;
-}
-
-function modInverse(a, m) {
-  a = mod(a, m);
-  for (let x = 1; x < m; x++) {
-    if ((a * x) % m === 1) return x;
-  }
-  return null;
-}
-
+// Descifrado de Hill
 function desencriptarHill() {
-  const texto = document.getElementById("textoPlano").value;
-  const bloque = parseInt(document.getElementById("tamBloque").value);
-  const matrizStr = document.getElementById("matrizClave").value;
+  try {
+    const texto = document.getElementById("textoCifrado").value;
+    const tamaño = parseInt(document.getElementById("tamBloqueDesc").value);
+    const matrizTexto = document.getElementById("matrizClaveDesc").value;
 
-  const matriz = parseMatrix(matrizStr, bloque);
-  const matrizInv = matrixInverseMod(matriz, 26);
-  if (!matrizInv) return;
+    const matriz = parsearMatriz(matrizTexto, tamaño);
+    const inversa = matrizInversaMod26(matriz);
+    const numeros = textoANumeros(texto);
 
-  const vector = textToVector(texto, bloque);
-  const resultado = [];
+    if (numeros.length % tamaño !== 0) {
+      throw new Error("El texto cifrado no es múltiplo del tamaño del bloque");
+    }
 
-  for (let i = 0; i < vector.length; i += bloque) {
-    const bloqueVec = vector.slice(i, i + bloque);
-    const resultadoBloque = math.multiply(matrizInv, bloqueVec);
-    resultado.push(...resultadoBloque.map(x => String.fromCharCode(mod(Math.round(x), 26) + 65)));
+    const resultado = [];
+    for (let i = 0; i < numeros.length; i += tamaño) {
+      const bloque = math.matrix(numeros.slice(i, i + tamaño));
+      const producto = math.multiply(inversa, bloque);
+      const mod = producto.toArray().map(n => ((Math.round(n) % 26) + 26) % 26);
+      resultado.push(...mod);
+    }
+
+    document.getElementById("resultadoDescifrado").textContent = numerosATexto(resultado);
+  } catch (error) {
+    alert("Error al desencriptar: " + error.message);
   }
-
-  document.getElementById("resultado").textContent = resultado.join('');
 }
-
 
 
 
